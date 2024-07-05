@@ -14,10 +14,10 @@ export const createScheduling = (data: {
 export const getSchedulings = () => api.get('/scheduling');
 
 export const confirmScheduling = (id: string) =>
-  api.post(`/scheduling/${id}/confirm`);
+  api.patch(`/scheduling/confirmation/${id}`);
 
 export const cancelScheduling = (id: string) =>
-  api.delete(`/scheduling/${id}`);
+  api.patch(`/scheduling/cancel/${id}`);
 
 export const getSlots = () =>
   api.get(`/slots`);

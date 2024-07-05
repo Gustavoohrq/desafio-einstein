@@ -1,9 +1,9 @@
 import React, { useEffect, useState } from 'react';
 import { useFormik } from 'formik';
-import * as Yup from 'yup';
 import styled from 'styled-components';
 import { createScheduling, getSlots } from '../services/api';
 import { AxiosError } from 'axios';
+import { appointmentSchema } from '../utils/validation';
 
 const Container = styled.div`
   display: flex;
@@ -79,18 +79,11 @@ const ErrorMessage = styled.div`
   font-size: 14px;
 `;
 
-const validationSchema = Yup.object({
-  licensePlate: Yup.string()
-    .matches(/^[A-Z]{3}[0-9][A-Z][0-9]{2}$/, 'Formato da placa inválido (ABC1D34)')
-    .required('Placa do veículo é obrigatória'),
-  date: Yup.date().required('Data é obrigatória'),
-  time: Yup.string().required('Hora é obrigatória'),
-  type: Yup.string().oneOf(['simples', 'completa']).required('Tipo de lavagem é obrigatório'),
-});
 
 
 const SchedulingForm = () => {
   const [slots, setSlots] = useState<Array<string>>([]);
+  const validationSchema = appointmentSchema
 
   useEffect(() => {
     const fetchSchedulings = async () => {
@@ -114,8 +107,8 @@ const SchedulingForm = () => {
     validationSchema,
     onSubmit: async (values) => {
       try {
-        const result = await createScheduling(values);
-        alert(result.data.message);
+        await createScheduling(values);
+        alert('Agendamento criado com sucesso.');
       } catch (error) {
         if (error instanceof AxiosError) {
           console.error(error.response?.data.message);
@@ -125,7 +118,7 @@ const SchedulingForm = () => {
           alert('Ocorreu um erro inesperado');
         }
       }
-      
+
     },
   });
 

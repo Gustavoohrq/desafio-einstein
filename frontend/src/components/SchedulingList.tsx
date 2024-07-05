@@ -1,7 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
-import { getSchedulings } from '../services/api';
+import { cancelScheduling, confirmScheduling, getSchedulings } from '../services/api';
 import moment from "moment";
+import { CheckCircleIcon, XCircleIcon } from '@heroicons/react/24/outline'
 
 const Title = styled.h1`
   color: white;
@@ -45,6 +46,7 @@ const TableHeaderCell = styled.th`
 
 const TableCell = styled.td`
   padding: 15px;
+  
 
 `;
 
@@ -54,13 +56,14 @@ interface Scheduling {
   date: string;
   time: string;
   type: string;
-  confirmed?: boolean;
+  status?: string;
 }
 
 const SchedulingList = () => {
   const [schedulings, setSchedulings] = useState<Scheduling[]>([]);
 
   useEffect(() => {
+
     const fetchSchedulings = async () => {
       try {
         const response = await getSchedulings();
@@ -72,7 +75,47 @@ const SchedulingList = () => {
 
     fetchSchedulings();
   }, []);
+  const confirmationHandleClick = async (id: string) => {
+    const confirmed = window.confirm('Deseja confirmar o agendamento?');
+    if (confirmed) {
+      try {
+        await confirmScheduling(id)
+        const updatedSchedulings = schedulings.map((appointment) => {
+          if (appointment.id === id) {
+            return { ...appointment, status: 'Confirmado' };
+          }
+          return appointment;
+        });
+        setSchedulings(updatedSchedulings);
+        alert('Agendamento confirmado!');
+      } catch (error) {
+        alert('Erro ao tentar confirmar agendamento.');
+      }
+    } else {
+      alert('Agendamento não confirmado.');
+    }
+  };
 
+  const cancelHandleClick = async (id: string) => {
+    const confirmed = window.confirm('Deseja confirmar o cancelamento do agendamento?');
+    if (confirmed) {
+      try {
+        await cancelScheduling(id)
+        const updatedSchedulings = schedulings.map((appointment) => {
+          if (appointment.id === id) {
+            return { ...appointment, status: 'Cancelado' };
+          }
+          return appointment;
+        });
+        setSchedulings(updatedSchedulings);
+        alert('Agendamento cancelado!');
+      } catch (error) {
+        alert('Erro ao tentar cancelar agendamento.');
+      }
+    } else {
+      alert('Agendamento não cancelado.');
+    }
+  };
   return (
     <SchedulingListWrapper>
       <Title>Agendamentos</Title>
@@ -95,9 +138,9 @@ const SchedulingList = () => {
               <TableCell>{moment(appointment.date, 'YYYY-MM-DD').format('DD/MM/YYYY')}</TableCell>
               <TableCell>{appointment.time}</TableCell>
               <TableCell>{appointment.type}</TableCell>
-              <TableCell>{!appointment.confirmed ? 'Não confirmado' : 'Confirmado' }</TableCell>
-              <TableCell></TableCell>
-              <TableCell></TableCell>
+              <TableCell>{appointment.status === "Em_Aberto" ? 'Em aberto' : appointment.status}</TableCell>
+              <TableCell ><CheckCircleIcon onClick={() => confirmationHandleClick(appointment.id)} width={24} title='Confirmar agendamento' style={{ cursor: 'pointer', color: "#666666", transition: "color 0.3s ease" }}></CheckCircleIcon> </TableCell>
+              <TableCell><XCircleIcon onClick={() => cancelHandleClick(appointment.id)} width={24} title='Cancelar agendamento' style={{ cursor: 'pointer', color: "red", transition: "color 0.3s ease" }}></XCircleIcon></TableCell>
             </TableRow>
           ))}
         </TableBody>
