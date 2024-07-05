@@ -32,7 +32,10 @@ Certifique-se de ter instalado em sua máquina:
    DATABASE_URL=mysql://usuario:senha@localhost:3306/nome_do_banco
    ```
    Substitua `usuario`, `senha`, `localhost`, `3306` e `nome_do_banco` pelos valores apropriados de acordo com sua configuração do Docker Compose e do MySQL.
-
+4. Iniciar prisma
+   ```bash
+   npx prisma db push
+   ```
 ## Instalação
 
 Instale as dependências do projeto:
