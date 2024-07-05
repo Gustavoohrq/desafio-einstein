@@ -3,7 +3,7 @@
 Esta é uma aplicação front-end construída com React . 
 
 
-## Configuração dos Microserviços
+## Configuração da API
 
 Antes de rodar a aplicação React, é necessário configurar e rodar o [backend](https://github.com/Gustavoohrq/desafio-einstein/backend).
 
