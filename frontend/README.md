@@ -5,7 +5,7 @@ Esta é uma aplicação front-end construída com React .
 
 ## Configuração da API
 
-Antes de rodar a aplicação React, é necessário configurar e rodar o [backend](https://github.com/Gustavoohrq/desafio-einstein/backend).
+Antes de rodar a aplicação React, é necessário configurar e rodar o [backend](https://github.com/Gustavoohrq/desafio-einstein/tree/main/backend).
 
 
 ## Configuração e Execução da Aplicação React
