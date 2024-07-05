@@ -1,5 +1,5 @@
 # Teste Prático -  Albert Einstein
-Este repositório contém o código desenvolvido como parte de um teste prático;
+Este repositório contém o código desenvolvido como parte de um teste prático.
 
 
 
