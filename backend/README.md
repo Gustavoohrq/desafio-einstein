@@ -36,6 +36,10 @@ Certifique-se de ter instalado em sua máquina:
    ```bash
    npx prisma db push
    ```
+3. **Configure as variáveis de ambiente**: Crie um arquivo `.env` na raiz do projeto e defina as seguintes variáveis:
+   ```env
+   DATABASE_URL=
+   ```
 ## Instalação
 
 Instale as dependências do projeto:
