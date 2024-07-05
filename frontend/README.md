@@ -1,6 +1,6 @@
 #  Frontend
 
-Esta é uma aplicação front-end construída com React . E.
+Esta é uma aplicação front-end construída com React . 
 
 
 ## Configuração dos Microserviços
